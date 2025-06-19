@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package calculator;
+
+service Calculator {
+  // Adds two integers and returns the result.
+  rpc Add(CalculatorRequest) returns (CalculatorResponse);
+}
+
+message CalculatorRequest {
+  int64 a = 1; // First integer to add
+  int64 b = 2; // Second integer to add
+}
+
+message CalculatorResponse {
+  int64 result = 1; // Result of the addition
+}
