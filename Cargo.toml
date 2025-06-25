@@ -11,3 +11,11 @@ tonic-reflection = "0.13"
 
 [build-dependencies]
 tonic-build = "0.13"
+
+[[bin]]
+name = "server"
+path = "src/main.rs"
+
+[[bin]]
+name = "client"
+path = "src/client.rs"
