@@ -7,6 +7,7 @@ edition = "2024"
 tonic = "0.13"
 tokio = { version = "1", features = ["full"] }
 prost = "0.13"                                 # de/serialize into protobuf
+tonic-reflection = "0.13"
 
 [build-dependencies]
 tonic-build = "0.13"
