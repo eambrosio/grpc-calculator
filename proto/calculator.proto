@@ -18,3 +18,13 @@ message CalculatorRequest {
 message CalculatorResponse {
   int64 result = 1; // Result of the addition
 }
+
+service Admin {
+  rpc GetRequestCount(GetRequestCountRequest) returns (GetRequestCountResponse);
+}
+
+message GetRequestCountRequest {}
+
+message GetRequestCountResponse {
+  uint64 count = 1; // Total number of requests received
+}
