@@ -5,6 +5,9 @@ package calculator;
 service Calculator {
   // Adds two integers and returns the result.
   rpc Add(CalculatorRequest) returns (CalculatorResponse);
+  // Divides two integers and returns the result.
+  // If the second integer is zero, it returns an error.
+  rpc Divide(CalculatorRequest) returns (CalculatorResponse);
 }
 
 message CalculatorRequest {
