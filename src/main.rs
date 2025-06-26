@@ -2,7 +2,7 @@ use std::sync;
 
 use proto::calculator_server::{Calculator, CalculatorServer};
 use tokio::sync::RwLock;
-use tonic::transport::Server;
+use tonic::{Status, metadata::MetadataValue, transport::Server};
 
 use crate::proto::admin_server::{Admin, AdminServer};
 
@@ -81,6 +81,15 @@ impl Calculator for CalculatorService {
     }
 }
 
+fn check_auth(req: tonic::Request<()>) -> Result<tonic::Request<()>, tonic::Status> {
+    let token: MetadataValue<_> = "Bearer token".parse().unwrap();
+
+    match req.metadata().get("authorization") {
+        Some(t) if t == token => Ok(req),
+        _ => Err(Status::unauthenticated("Invalid auth token")),
+    }
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr = "127.0.0.1:50051".parse()?;
@@ -100,7 +109,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Server::builder()
         .add_service(reflection_service)
         .add_service(CalculatorServer::new(calc))
-        .add_service(AdminServer::new(admin))
+        .add_service(AdminServer::with_interceptor(admin, check_auth))
         .serve(addr)
         .await?;
 
