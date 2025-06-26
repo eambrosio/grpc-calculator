@@ -5,9 +5,9 @@ use tokio::sync::RwLock;
 use tonic::transport::Server;
 
 use crate::{
-    admin::{AdminService, check_auth},
+    admin::{check_auth, AdminService},
     calculator::CalculatorService,
-    proto::admin_server::AdminServer,
+    proto::{admin_server::AdminServer},
 };
 
 mod admin;
